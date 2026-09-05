@@ -8,7 +8,13 @@ pub struct Country {
 }
 
 impl Country {
-    pub fn new(name: String, population:i64, army_size:i64, conquered_countries:Vec<String>, is_conquered:bool) -> Self {
+    pub fn new(
+        name: String,
+        population: i64,
+        army_size: i64,
+        conquered_countries: Vec<String>,
+        is_conquered: bool,
+    ) -> Self {
         Self {
             name: name.to_string(),
             population,
@@ -21,12 +27,12 @@ impl Country {
     pub fn get_name(&self) -> &String {
         &self.name
     }
-    
-    pub fn get_population(&self) -> &i64{
+
+    pub fn get_population(&self) -> &i64 {
         &self.population
     }
-    
-    pub fn get_army_size(&self) ->&i64 {
+
+    pub fn get_army_size(&self) -> &i64 {
         &self.army_size
     }
 }
