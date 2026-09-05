@@ -24,7 +24,7 @@ impl Player {
     }
 
     pub fn spy(&self, game_map: &mut GameMap) {
-        GameMap.list_countries();
+        game_map.list_countries();
     
         let mut choice = String::new();
             io::stdin()
@@ -32,7 +32,7 @@ impl Player {
             .expect("Failed to read line");
         let choice = choice.trim();
 
-        let mut user_choice = match choice.parse() {
+        let user_choice_spy: usize = match choice.parse() {
             Ok(number) => number,
             Err(_) => {
                 println!("Invalid game option. Try again.");
@@ -40,7 +40,11 @@ impl Player {
             },
         };
 
-        let enemy = game_map.get_country_by_index(user_choice - 1);
+        if user_choice_spy < 1|| user_choice_spy > 4 {
+            println!("Invalid game input. Try again");
+            return;
+        }
+        let enemy = game_map.get_country_by_index(user_choice_spy - 1);
 
         if enemy.get_name() == self.country.get_name() {
             println!("You can't spy on your own nation!");
