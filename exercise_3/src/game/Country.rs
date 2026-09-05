@@ -32,7 +32,4 @@ impl Country {
         &self.population
     }
 
-    pub fn get_army_size(&self) -> &i64 {
-        &self.army_size
-    }
 }

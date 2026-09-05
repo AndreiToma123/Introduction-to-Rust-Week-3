@@ -35,4 +35,23 @@ impl Country {
     pub fn get_army_size(&self) -> &i64 {
         &self.army_size
     }
+
+    pub fn get_is_conquered(&self) {
+        &self.is_conquered
+    }
+    pub fn set_population(&self) {
+
+    }
+    pub fn get_army_size(&self) {
+
+    }
+    pub fn set_army_size(&self) {
+
+    }
+    pub fn set_conquered_nations(&self) {
+        
+    }
+    pub fn set_is_conquered(&self) {
+        
+    }
 }
