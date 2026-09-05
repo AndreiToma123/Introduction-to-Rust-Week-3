@@ -40,7 +40,7 @@ impl Player {
             },
         };
 
-        if user_choice_spy < 1|| user_choice_spy > 4 {
+        if user_choice_spy < 1 || user_choice_spy > 4 {
             println!("Invalid game input. Try again");
             return;
         }
@@ -55,6 +55,34 @@ impl Player {
             println!("Name: {}", enemy.get_name());
             println!("Population: {}", enemy.get_population());
             println!("Army size: {}", enemy.get_army_size());
+        }
+    }
+    pub fn conquer_nation(&mut self, target: &mut Country, country_name: String) {
+        if *target.get_is_conquered() {
+            println!("Already conquered.");
+            return;
+        }
+        else if target.get_name() == self.country.get_name() {
+            println!("You cannot conquer your own country.");
+            return;
+        }
+        else if target.get_army_size() < self.country.get_army_size() {
+            println!("Conquest successful!");
+            let mut conquered_vec = self.country.get_conquered_nations().clone();
+            conquered_vec.push(country_name.clone());
+            self.country.set_conquered_nations(conquered_vec);
+            let new_army_size = *self.country.get_army_size() + *target.get_army_size();
+            self.country.set_army_size(new_army_size);
+            let new_population = *self.country.get_population() + *target.get_population();
+            self.country.set_population(new_population);
+            target.set_is_conquered(true)
+        }
+        else if target.get_army_size() == self.country.get_army_size() {
+            println!("Tie");
+        }
+        else if target.get_army_size() > self.country.get_army_size() {
+            println!("You have lost your war against {}. You have been conquered.", country_name);
+            self.country.set_is_conquered(true);
         }
     }
 }

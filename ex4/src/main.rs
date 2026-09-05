@@ -4,7 +4,7 @@ use game::GameMap::GameMap;
 use std::io;
 use std::process::exit;
 
-pub fn player_check(player: &Player, game_map: &mut GameMap) {
+pub fn player_check(player: &mut Player, game_map: &mut GameMap) {
     println!("| Inspection on your own nation? | y = yes | n = no |");
     
     let mut choice = String::new();
@@ -21,7 +21,7 @@ pub fn player_check(player: &Player, game_map: &mut GameMap) {
     }
 
     let mut spy_choice = String::new();
-    println!("| 1) Spy on a country | 0) Exit program |");
+    println!("| 1) Spy on a country | 2) Invade a country | 0) Exit program |");
     io::stdin()
         .read_line(&mut spy_choice)
         .expect("Failed to read line");
@@ -38,6 +38,31 @@ pub fn player_check(player: &Player, game_map: &mut GameMap) {
         1 => {
             player.spy(game_map);
         },
+        2 => {
+            game_map.list_countries();
+    
+            let mut choice = String::new();
+                io::stdin()
+                .read_line(&mut choice)
+                .expect("Failed to read line");
+            let choice = choice.trim();
+
+            let user_choice_conq: usize = match choice.parse() {
+                Ok(number) => number,
+                Err(_) => {
+                    println!("Invalid game option. Try again.");
+                    return;
+                },
+            };
+
+            if user_choice_conq < 1 || user_choice_conq > 4 {
+                println!("Invalid game input. Try again");
+                return;
+            }
+            let enemy = game_map.get_country_by_index(user_choice_conq - 1);
+
+            player.conquer_nation(enemy, enemy.get_name().clone());
+        },
         0 => { exit(0); },
         _ => {
             println!("Invalid input. Try again.");
@@ -49,7 +74,7 @@ pub fn player_check(player: &Player, game_map: &mut GameMap) {
 
 fn main() {
     let mut game_map = GameMap::new();
-    let player: Player;
+    let mut player: Player;
     loop {
         println!("| 1) Finland | 2) Sweden | 3) Norway | 4) Denmark |");
         println!("Choose your country: ");
@@ -84,6 +109,6 @@ fn main() {
     }
 
     loop {
-        player_check(&player, &mut game_map);
+        player_check(&mut player, &mut game_map);
     }
 }

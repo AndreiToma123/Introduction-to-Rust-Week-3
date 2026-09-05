@@ -36,22 +36,26 @@ impl Country {
         &self.army_size
     }
 
-    pub fn get_is_conquered(&self) {
+    pub fn get_is_conquered(&self) ->&bool {
         &self.is_conquered
     }
-    pub fn set_population(&self) {
 
+    pub fn get_conquered_nations(&self) -> &Vec<String> {
+        &self.conquered_countries
     }
-    pub fn get_army_size(&self) {
 
+    pub fn set_population(&mut self, given_population: i64) {
+        self.population = given_population;
     }
-    pub fn set_army_size(&self) {
 
+    pub fn set_army_size(&mut self, given_army_size: i64) {
+        self.army_size = given_army_size;
     }
-    pub fn set_conquered_nations(&self) {
-        
+
+    pub fn set_conquered_nations(&mut self, given_conquered_countries: Vec<String>) {
+        self.conquered_countries = given_conquered_countries;
     }
-    pub fn set_is_conquered(&self) {
-        
+    pub fn set_is_conquered(&mut self, given_is_conquered: bool) {
+        self.is_conquered = given_is_conquered;
     }
 }
