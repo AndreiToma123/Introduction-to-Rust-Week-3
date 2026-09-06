@@ -2,7 +2,7 @@ mod game;
 use game::GameMap::GameMap;
 use game::Player::Player;
 use std::io;
-use std::process::exit;
+// use std::process::exit;
 
 pub fn player_check(player: &mut Player, game_map: &mut GameMap) {
     println!("| Inspection on your own nation? | y = yes | n = no |");
@@ -36,7 +36,7 @@ pub fn player_check(player: &mut Player, game_map: &mut GameMap) {
     match user_choice {
         1 => {
             player.spy(game_map);
-        }
+        },
         2 => {
             game_map.list_countries();
 
@@ -61,14 +61,14 @@ pub fn player_check(player: &mut Player, game_map: &mut GameMap) {
             let enemy = game_map.get_country_by_index(user_choice_conq - 1);
 
             player.conquer_nation(enemy, enemy.get_name().clone());
-        }
+        },
         3 => {
             player.get_country().add_personel();
-        }
+        },
         _ => {
             println!("Invalid input. Try again.");
             return;
-        }
+        },
     }
 }
 
@@ -110,7 +110,7 @@ fn main() {
     loop {
         player_check(&mut player, &mut game_map);
         let player_name = player.get_country().get_name().clone();
-        game_map.other_countries_turn(player_name);
+        game_map.other_countries_turn(&player_name);
 
         let win_condition = game_map.get_countries().iter()
             .filter(|c| c.get_name() != &player_name)

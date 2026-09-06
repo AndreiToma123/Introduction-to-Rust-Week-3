@@ -1,6 +1,8 @@
 use super::Country::Country;
 use super::GameMap::GameMap;
 use std::io;
+use std::process::exit;
+
 
 pub struct Player {
     country: Country,
@@ -58,16 +60,16 @@ impl Player {
         }
     }
     pub fn conquer_nation(&mut self, target: &mut Country, country_name: String) {
-        if *target.get_is_conquered() {
+        if *target.get_is_conquered() || self.country.get_conquered_nations().contains(&country_name){
             println!("Already conquered.");
             return;
         }
         else if target.get_name() == self.country.get_name() {
-            println!("You cannot conquer your own country.");
+            println!("Even your sick desires need boundaries.");
             return;
         }
         else if target.get_army_size() < self.country.get_army_size() {
-            println!("Conquest successful!");
+            println!("You have conquered {}", country_name);
             let mut conquered_vec = self.country.get_conquered_nations().clone();
             conquered_vec.push(country_name.clone());
             self.country.set_conquered_nations(conquered_vec);
@@ -81,8 +83,9 @@ impl Player {
             println!("Tie");
         }
         else if target.get_army_size() > self.country.get_army_size() {
-            println!("You have lost your war against {}. You have been conquered.", country_name);
-            self.country.set_is_conquered(true);
+            println!("You have lost your war against {}. You have been conquered.\nGame over!", country_name);
+            exit(0);
+            // self.country.set_is_conquered(true);
         }
     }
 }

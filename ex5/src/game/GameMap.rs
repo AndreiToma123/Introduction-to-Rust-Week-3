@@ -32,10 +32,10 @@ impl GameMap {
         self.countries = countries;
     }
 
-    pub fn other_countries_turn(&mut self, player_country_name: String) {
+    pub fn other_countries_turn(&mut self, player_country_name: &String) {
         let mut countries = self.get_countries().clone();
         for country in countries.iter_mut() {
-            if !*country.get_is_conquered() && country.get_name() != &player_country_name {
+            if !*country.get_is_conquered() && country.get_name() != player_country_name {
                 country.add_personel();
             }
         }
